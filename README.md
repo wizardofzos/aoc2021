@@ -3,7 +3,9 @@
 
 Based on  https://github.com/wizardofzos/flask-rest-zos/
 
+## What's this?
 
+Repo for my solutions to AOC2021. More info: https://adventofcode.com/2021
 
 
 ## Requirements
