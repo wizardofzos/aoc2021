@@ -11,7 +11,7 @@ app = Flask(__name__)
 api = Api(app)  
 app.config.update({
     'APISPEC_SPEC': APISpec(
-        title='Awesome Project',
+        title='Advent of Code 2021',
         version='v1',
         plugins=[MarshmallowPlugin()],
         openapi_version='2.0.0'
@@ -21,13 +21,19 @@ app.config.update({
 })
 docs = FlaskApiSpec(app)
 
+class ResponseSchema(Schema):
+    '''
+    All solutions should post in the field solution :)
+    '''    
+    solution = fields.Str(default='The answer')
 
+from endpoints import REXX, PYTHON
 
-from endpoints import DemoAPI
+api.add_resource(REXX, '/rexx')
+docs.register(REXX)
 
-api.add_resource(DemoAPI, '/demo')
-docs.register(DemoAPI)
-
+api.add_resource(PYTHON, '/python')
+docs.register(PYTHON)
 
 
 if __name__ == '__main__':
