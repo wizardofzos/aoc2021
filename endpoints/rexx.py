@@ -6,13 +6,6 @@ from flask import abort
 
 from subprocess import Popen, PIPE
 
-class ResponseSchema(Schema):
-    '''
-    All solutions should post in the field solution :)
-    '''    
-    solution = fields.Str(default='The answer')
-
-
 #  Restful way of creating APIs through Flask Restful
 class REXX(MethodResource, Resource):
     @doc(description='An example REXX-solution endpoint.', tags=['REXX'],
@@ -21,7 +14,6 @@ class REXX(MethodResource, Resource):
     }
     )
     
-    @marshal_with(ResponseSchema)  # marshalling
     def get(self):
         '''
         Get method represents a GET API method
@@ -32,6 +24,6 @@ class REXX(MethodResource, Resource):
         stdout, stderr = process.communicate()
         parts = stdout.decode('utf-8').split('=')
         if parts[0] == "solution":
-            return {'solution': parts[1].strip()}
+            return {'solution': int(parts[1].strip())}
         else:
             return {'solution': '*FAILED*'}
