@@ -27,7 +27,7 @@ Based on  https://github.com/wizardofzos/flask-rest-zos/
     . bin/activate
     # Optional if you want another port than 12345
     export PORT=<port-you-want>
-    python3 test-app.py
+    python3 aoc2021.py
 
 Then point your browser to http://<ip_or_dns_of_your_mainframe>:12345/swagger-ui and...
 
