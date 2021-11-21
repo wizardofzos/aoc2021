@@ -6,6 +6,9 @@ Based on  https://github.com/wizardofzos/flask-rest-zos/
 ## What's this?
 
 Repo for my solutions to AOC2021. More info: https://adventofcode.com/2021
+Wanted to have some extra practice on flask-rest and also do some REXX. 
+
+So I've made this REST API that either runs python code, or REXX and shows the result...
 
 
 ## Requirements
