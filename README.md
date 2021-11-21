@@ -31,7 +31,7 @@ Based on  https://github.com/wizardofzos/flask-rest-zos/
 
 Then point your browser to http://<ip_or_dns_of_your_mainframe>:12345/swagger-ui and...
 
-![inaction](https://github.com/wizardofzos/flask-rest-zos/blob/main/inaction.png?raw=true)
+![inaction](https://github.com/wizardofzos/flask-rest-zos/blob/main/aoc2021-startup.png?raw=true)
        
     
 ## Adding endpoints to the REST-API
