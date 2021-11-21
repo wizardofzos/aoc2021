@@ -49,4 +49,4 @@ Then in test-app.py add these lines:
 And off you go :)
 
 # TODO
-Add gunicorn SSL example :)
+Write how to add new solutions :)
