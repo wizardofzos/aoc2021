@@ -9,10 +9,13 @@ from flask_apispec import marshal_with, doc, use_kwargs
 
 app = Flask(__name__)  
 api = Api(app)  
+
+
 app.config.update({
     'APISPEC_SPEC': APISpec(
         title='Advent of Code 2021',
         version='v1',
+        info={'description': 'My <a href="https://adventofcode.com">Advent of Code 2021</a>'},
         plugins=[MarshmallowPlugin()],
         openapi_version='2.0.0'
     ),
