@@ -15,7 +15,7 @@ app.config.update({
     'APISPEC_SPEC': APISpec(
         title='Advent of Code 2021',
         version='v1',
-        info={'description': 'My <a href="https://adventofcode.com">Advent of Code 2021</a>'},
+        info={'description': 'My <a href="https://adventofcode.com">Advent of Code 2021 solutions.</a>'},
         plugins=[MarshmallowPlugin()],
         openapi_version='2.0.0'
     ),
