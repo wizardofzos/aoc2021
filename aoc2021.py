@@ -37,9 +37,11 @@ docs.register(REXX)
 api.add_resource(PYTHON, '/python')
 docs.register(PYTHON)
 
-from endpoints import REXXD01P1
+from endpoints import REXXD01P1,PYTHOND01P1
 api.add_resource(REXXD01P1, '/d01p01-rexx')
 docs.register(REXXD01P1)
+api.add_resource(PYTHOND01P1, '/d01p01-python')
+docs.register(PYTHOND01P1)
 
 if __name__ == '__main__':
     import os
