@@ -15,6 +15,6 @@ x = bpxwunix('cat 'infile,,file.,se.)
 
 if strip(file.1) == "EXAMPLE INPUT FILE"
 then solution = 9001
-else solution = "B0rked"
+else solution = 0000
 say "solution="solution 
 
