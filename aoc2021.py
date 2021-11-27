@@ -15,7 +15,8 @@ app.config.update({
     'APISPEC_SPEC': APISpec(
         title='Advent of Code 2021',
         version='v1',
-        info={'description': 'My <a href="https://adventofcode.com">Advent of Code 2021 solutions.</a>'},
+        info={'description': 'My <a href="https://adventofcode.com">Advent of Code 2021</a> solutions.' +
+        '<br />Github Repo: <a href="https://github.com/wizardofzos/aoc2021">github.com/wizardofzos/aoc2021</a>'},
         plugins=[MarshmallowPlugin()],
         openapi_version='2.0.0'
     ),
@@ -31,13 +32,14 @@ class ResponseSchema(Schema):
     solution = fields.Str(default='The answer')
 
 from endpoints import REXX, PYTHON
-
 api.add_resource(REXX, '/rexx')
 docs.register(REXX)
-
 api.add_resource(PYTHON, '/python')
 docs.register(PYTHON)
 
+from endpoints import REXXD01P1
+api.add_resource(REXXD01P1, '/d01p01-rexx')
+docs.register(REXXD01P1)
 
 if __name__ == '__main__':
     import os
