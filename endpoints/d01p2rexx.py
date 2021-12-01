@@ -7,7 +7,7 @@ from flask import abort
 from subprocess import Popen, PIPE
 
 #  Restful way of creating APIs through Flask Restful
-class REXXD01P1(MethodResource, Resource):
+class REXXD01P2(MethodResource, Resource):
     @doc(description="For later :)"
     , tags=['REXX'],
     responses={
@@ -21,7 +21,7 @@ class REXXD01P1(MethodResource, Resource):
         '''
 
         # Run the REXX
-        process = Popen(['/prj/repos/aoc2021/rexxes/2021d1p1.rex'], stdout=PIPE, stderr=PIPE)
+        process = Popen(['/prj/repos/aoc2021/rexxes/2021d1p2.rex'], stdout=PIPE, stderr=PIPE)
         stdout, stderr = process.communicate()
         parts = stdout.decode('utf-8').split('=')
         if parts[0] == "solution":
