@@ -9,9 +9,8 @@ from subprocess import Popen, PIPE
 import uuid
 import os
 
-class D1RequestSchema(Schema):
-    puzzle = fields.Raw(required=True, description="Puzzle Input", type='file')
 
+from .fileupload import FileSchema
 
 #  Restful way of creating APIs through Flask Restful
 class REXXD01P1(MethodResource, Resource):
@@ -29,7 +28,7 @@ class REXXD01P1(MethodResource, Resource):
         '200': {'description': 'Everything is ok!'},
     }
     )
-    @use_kwargs(D1RequestSchema, location='files')
+    @use_kwargs(FileSchema, location='files')
     def post(self, puzzle):
         # stick the file somewhere
         infile = f"/tmp/{uuid.uuid4()}"
@@ -60,16 +59,20 @@ class REXXD01P2(MethodResource, Resource):
         '200': {'description': 'Everything is ok!'},
     }
     )
-    
-    def get(self):
-        '''
-        Get method represents a GET API method
-        '''
-
+    @use_kwargs(FileSchema, location='files')
+    def post(self, puzzle):
+         # stick the file somewhere
+        infile = f"/tmp/{uuid.uuid4()}"
+        gofile = f"/tmp/{uuid.uuid4()}"
+        puzzle.save(infile)  # will go be iso8859-1
+        os.system(f"iconv -f iso8859-1 -t ibm-1047 {infile} > {gofile}")
+        os.system(f"chtag -tc ibm-1047 {gofile}")
         # Run the REXX
-        process = Popen(['/prj/repos/aoc2021/rexxes/2021d1p2.rex'], stdout=PIPE, stderr=PIPE)
+        process = Popen(['/prj/repos/aoc2021/rexxes/2021d1p2.rex', gofile], stdout=PIPE, stderr=PIPE)
         stdout, stderr = process.communicate()
         parts = stdout.decode('utf-8').split('=')
+        os.remove(infile)
+        os.remove(gofile)
         if parts[0] == "solution":
             return {'solution': int(parts[1].strip())}
         else:

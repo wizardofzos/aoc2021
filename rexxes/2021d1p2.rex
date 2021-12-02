@@ -1,11 +1,9 @@
 /* REXX */
 
-rootpath = "/prj/repos/aoc2021"  
-inputpath = rootpath"/input/" 
-infile = inputpath"2021d1p1.ebcdic"
+parse arg puzzleinput
 
-x = bpxwunix('cat 'infile,,file.,se.)
-
+/* remove the 0x0d :)*/
+x = bpxwunix('tr -d "\r" < 'puzzleinput,,file.,se.)
 
 
 buckets. = 0
