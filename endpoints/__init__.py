@@ -1,6 +1,6 @@
 from .demo import DemoAPI
 from .rexx import REXX
 from .python import PYTHON
-from .d01p1rexx import REXXD01P1
-from .d01p2rexx import REXXD01P2
+from .rexxd01 import REXXD01P1, REXXD01P2
 from .d01p1python import PYTHOND01P1
+from .d01p2python import PYTHOND01P2

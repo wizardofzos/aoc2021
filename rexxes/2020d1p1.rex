@@ -1,10 +1,14 @@
 /* REXX */
 
+parse arg puzzleinput
+
 rootpath = "/prj/repos/aoc2021"  
 inputpath = rootpath"/input/" 
 infile = inputpath"2020d1p1.ebcdic"
 
-x = bpxwunix('cat 'infile,,file.,se.)
+say puzzleinput
+
+x = bpxwunix('cat 'puzzleinput,,file.,se.)
 
 
 
