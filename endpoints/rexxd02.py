@@ -16,7 +16,7 @@ from .fileupload import FileSchema
 class REXXD02P1(MethodResource, Resource):
   
     
-    @doc(description="Upload puzzle input, get solution"
+    @doc(description="<a target='_blank' href='https://adventofcode.com/2021/day/2'>Day 2</a>"
     , tags=['REXX'],
     responses={
         '200': {'description': 'Everything is ok!'},
@@ -45,7 +45,7 @@ class REXXD02P1(MethodResource, Resource):
 class REXXD02P2(MethodResource, Resource):
   
     
-    @doc(description="Upload puzzle input, get solution"
+    @doc(description="<a target='_blank' href='https://adventofcode.com/2021/day/2'>Day 2</a>"
     , tags=['REXX'],
     responses={
         '200': {'description': 'Everything is ok!'},
