@@ -39,8 +39,9 @@ docs.register(REXX)
 api.add_resource(PYTHON, '/python')
 docs.register(PYTHON)
 
-from endpoints import REXXD01P1, PYTHOND01P1, REXXD01P2, PYTHOND01P2, REXXD02P1, REXXD02P2
-from endpoints import REXXD03P1, REXXD03P2
+
+from endpoints import *
+
 api.add_resource(REXXD01P1, '/d01p01-rexx')
 docs.register(REXXD01P1)
 api.add_resource(REXXD01P2, '/d01p02-rexx')
@@ -57,6 +58,10 @@ api.add_resource(REXXD03P1, '/d03p01-rexx')
 docs.register(REXXD03P1)
 api.add_resource(REXXD03P2, '/d03p02-rexx')
 docs.register(REXXD03P2)
+api.add_resource(REXXD04P1, '/d04p01-rexx')
+docs.register(REXXD04P1)
+api.add_resource(REXXD04P2, '/d04p02-rexx')
+docs.register(REXXD04P2)
 
 if __name__ == '__main__':
     import os
