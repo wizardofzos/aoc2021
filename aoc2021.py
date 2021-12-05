@@ -62,6 +62,11 @@ api.add_resource(REXXD04P1, '/d04p01-rexx')
 docs.register(REXXD04P1)
 api.add_resource(REXXD04P2, '/d04p02-rexx')
 docs.register(REXXD04P2)
+api.add_resource(REXXD05P1, '/d05p01-rexx')
+docs.register(REXXD05P1)
+api.add_resource(REXXD05P2, '/d05p02-rexx')
+docs.register(REXXD05P2)
+
 
 if __name__ == '__main__':
     import os
