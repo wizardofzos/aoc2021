@@ -2,7 +2,7 @@
 
 parse arg puzzleinput
 DEBUG="0"
-
+begin = time('S')
 /* remove the 0x0d :)*/
 x = bpxwunix('tr -d "\r" < 'puzzleinput,,file.,se.)
 
@@ -18,8 +18,6 @@ ymax = 0
 /* parse the stuff into our massive stem */
 do i = 1 to file.0
   parse var file.i x1","y1" -> "x2","y2
-  if DEBUG="1" then 
-    say line.i
   /* take care of max vals */
   if x1 > xmax then xmax = x1
   if x2 > xmax then xmax = x2
@@ -95,14 +93,11 @@ end
 
 points = 0
 do y = 0 to ymax
-  if DEBUG="1" then
-    xline = ''
   do x = 0 to xmax
-    if DEBUG="1" then
-      xline = xline" " loc.x.y
     if loc.x.y >= 2 then points = points + 1
   end
-  if DEBUG="1" then say xline
 end
 
+if DEBUG="1" then 
+  say time('S') - begin
 say "solution="points
