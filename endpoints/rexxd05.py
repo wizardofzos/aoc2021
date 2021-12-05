@@ -45,7 +45,8 @@ class REXXD05P1(MethodResource, Resource):
 class REXXD05P2(MethodResource, Resource):
   
     
-    @doc(description="<a target='_blank' href='https://adventofcode.com/2021/day/5'>Day 5</a>"
+    @doc(description="<a target='_blank' href='https://adventofcode.com/2021/day/5'>Day 5</a>" +
+    "<br />Poor mans implementation. Take the 'a' version for a faster solution"
     , tags=['REXX'],
     responses={
         '200': {'description': 'Everything is ok!'},
