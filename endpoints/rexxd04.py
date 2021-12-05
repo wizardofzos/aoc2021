@@ -16,7 +16,8 @@ from .fileupload import FileSchema
 class REXXD04P1(MethodResource, Resource):
   
     
-    @doc(description="<a target='_blank' href='https://adventofcode.com/2021/day/4'>Day 4</a>"
+    @doc(description="<a target='_blank' href='https://adventofcode.com/2021/day/4'>Day 4</a>" +
+    "<br />Videos -> <a target='_blank' href='https://youtu.be/NM8W2mQznn8'>Here</a>"
     , tags=['REXX'],
     responses={
         '200': {'description': 'Everything is ok!'},
