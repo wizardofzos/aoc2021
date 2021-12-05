@@ -70,3 +70,32 @@ class REXXD05P2(MethodResource, Resource):
             return {'solution': int(parts[1].strip())}
         else:
             return {'solution': '*FAILED*'}
+
+class REXXD05P2a(MethodResource, Resource):
+  
+    
+    @doc(description="<a target='_blank' href='https://adventofcode.com/2021/day/5'>Day 5</a><br />. Faster solution"
+    , tags=['REXX'],
+    responses={
+        '200': {'description': 'Everything is ok!'},
+    }
+    )
+    @use_kwargs(FileSchema, location='files')
+    def post(self, puzzle):
+        # stick the file somewhere
+        infile = f"/tmp/{uuid.uuid4()}"
+        gofile = f"/tmp/{uuid.uuid4()}"
+        puzzle.save(infile)  # will go be iso8859-1 make ebcdic for the rexx?
+        os.system(f"iconv -f iso8859-1 -t ibm-1047 {infile} > {gofile}")
+        os.system(f"chtag -tc ibm-1047 {gofile}")
+        # Run the REXX
+        process = Popen(['/prj/repos/aoc2021/rexxes/d5p2a.rex',gofile], stdout=PIPE, stderr=PIPE)
+        stdout, stderr = process.communicate()
+        parts = stdout.decode('utf-8').split('=')
+        os.remove(infile)
+        os.remove(gofile)
+        print(stdout.decode('utf-8'))
+        if parts[0] == "solution":
+            return {'solution': int(parts[1].strip())}
+        else:
+            return {'solution': '*FAILED*'}
