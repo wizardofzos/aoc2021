@@ -42,6 +42,10 @@ docs.register(PYTHON)
 
 from endpoints import *
 
+api.add_resource(COBOL, '/cobol')
+docs.register(COBOL)
+
+
 api.add_resource(REXXD01P1, '/d01p01-rexx')
 docs.register(REXXD01P1)
 api.add_resource(REXXD01P2, '/d01p02-rexx')

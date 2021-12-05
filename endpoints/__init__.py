@@ -1,5 +1,6 @@
 from .demo import DemoAPI
 from .rexx import REXX
+from .cobol import COBOL
 from .python import PYTHON
 from .rexxd01 import REXXD01P1, REXXD01P2
 from .rexxd02 import REXXD02P1, REXXD02P2
