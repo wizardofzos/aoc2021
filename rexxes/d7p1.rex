@@ -22,12 +22,12 @@ end
 
 
 /* Why am I brute forcing this again?! */
-
 lowestCost = 100000000000000000000000000000000000000000000000000000
 do i = 0 to maxpos
+  if crabat.i = 0  then iterate
   fuel = 0                                    /* fuel for move to i */
-
   do j = 0 to maxpos
+    if crabat.j = 0 then iterate
     fuel = (abs(i-j) * crabat.j) + fuel
   end
   if fuel < lowestCost 

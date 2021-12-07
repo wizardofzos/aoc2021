@@ -22,22 +22,18 @@ end
 
 
 /* Why am I brute forcing this again?! */
-
 lowestCost = 100000000000000000000000000000000000000000000000000000
 do i = 0 to maxpos
-  /* optimize: no need to calculate move to empy spots. Saves 28secs! */
-  if crabat.i = 0 then iterate
+  if crabat.i = 0  then iterate
   fuel = 0                                    /* fuel for move to i */
   do j = 0 to maxpos
-    /* optimize no need to calculate moving from empty spots (another 5 secs)*/
     if crabat.j = 0 then iterate
-    d = abs(i-j) /* saves 4 secs doing it only once.. */
-    fuel = (((d*(d+1))/2) * crabat.j) + fuel
+    d = abs(i-j)
+    gs = (d * (d + 1)) / 2
+    fuel = (gs * crabat.j) + fuel
   end
   if fuel < lowestCost 
-  then do 
-    lowestCost = fuel
-  end
+  then lowestCost = fuel
 end
 say "solution="lowestCost"@"time('S')-begin
 
