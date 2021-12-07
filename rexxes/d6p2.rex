@@ -39,7 +39,5 @@ end
 
 say "solution="fishpocalypse
 
-Another great lesson on writing good code, not just code that works!!
-Thanks for the lesson @ericwastl !!
 
 
