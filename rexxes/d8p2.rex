@@ -20,7 +20,7 @@ d.8 = 'abcdefg'               /* len = 7 ! */
 d.9 = 'abcdfg'                /* len = 6   */
 
 /* First parse the input into 10x patterns | 4x outputs */
-easyOnes = 0
+sigsum = 0
 do i = 1 to file.0
   /* keep track of patterns & output */
   patt. = ''
@@ -32,7 +32,7 @@ do i = 1 to file.0
   do ff = 0 to 9
     found.ff = ''
   end
-
+  
   foundcount = 0
   state = 'patterns'
   p = words(file.i)
@@ -41,16 +41,6 @@ do i = 1 to file.0
     if str = '|' then do
       state = 'outputs'
       iterate
-    end
-    if state = 'patterns' then do
-      np = patt.0 + 1            /* this is the REXX way of */
-      patt.np = str              /* saying patt.append(str) */
-      patt.0 = np                /* I know right...         */
-    end
-    if state = 'outputs' then do
-      no = out.0 + 1
-      out.no = str
-      out.0 = no
     end
     /* also str can be in multiple order (ab or ba) but means same */
     /* so sort it */
@@ -64,6 +54,17 @@ do i = 1 to file.0
     if pos('f',str) > 0 then newstr = newstr"f"
     if pos('g',str) > 0 then newstr = newstr"g"
     str = newstr
+    if state = 'patterns' then do
+      np = patt.0 + 1            /* this is the REXX way of */
+      patt.np = str              /* saying patt.append(str) */
+      patt.0 = np                /* I know right...         */
+    end
+    if state = 'outputs' then do
+      no = out.0 + 1
+      out.no = str
+      out.0 = no
+    end
+  
 
     /* now we go and see what str gives us */
     possibles = potentialDigits(str) 
@@ -123,24 +124,27 @@ do i = 1 to file.0
     found.3 = reduced3
     say "reduced 3??"
     xx = printKnown()
+
     /* The letters we found in 1 have to be in 9 */
     reduced9 = ''
     do check = 1 to words(found.9)
       if innit(found.1,word(found.9, check)) > 0 then do
         reduced9 = strip(reduced9' 'word(found.9, check))
       end
-      found.9 = reduced9
     end
+    found.9 = reduced9
+
     /* The letters we found in 7 have to be in 9 */
     reduced9 = ''
     do check = 1 to words(found.9)
       if innit(found.7,word(found.9, check)) > 0 then do
         reduced9 = strip(reduced9' 'word(found.9, check))
       end
-      found.9 = reduced9
     end
+    found.9 = reduced9
     say "Reduction basic done"
     xx =  printKnown()
+  
     /* now let's see if we've known that are also in potentials */
     do kk = 0 to 9
       if words(found.kk) = 1 then do
@@ -168,7 +172,7 @@ do i = 1 to file.0
     reduced0 = ''
     do check = 1 to words(found.0)
       checkword = word(found.0, check)
-      say "Checking if "checkword" can be 0"
+      say "Checking if "checkword" can be 0 based on value of 8"
       if pos('a',checkword) = 0 then gofor='a'
       if pos('b',checkword) = 0 then gofor='b'
       if pos('c',checkword) = 0 then gofor='c'
@@ -176,19 +180,40 @@ do i = 1 to file.0
       if pos('e',checkword) = 0 then gofor='e'
       if pos('f',checkword) = 0 then gofor='f'
       if pos('g',checkword) = 0 then gofor='g'
-      say "Not in 0 => "gofor" check with 8"
+      say "Character Not in 0 => "gofor" check with 8"
       if pos(gofor, word(found.8,1)) > 0 then do
         say ".. it's in 8 so could be "checkword
         reduced0 = strip(reduced0' 'checkword)
       end
-      
-      
     end
-    /* super weird.. whatever is NOT in zero, HAS to be in 9 IF 9 has only 1*/
-    if words(found.9) = 1 then do
+    found.0 = reduced0
+
+    /* everything in the 6 must be in the 5 */
+    if words(found.6) = 1 then do
+      reduced5 = ''
+      do check = 1 to words(found.5)
+        checkword = word(found.5, check)
+        say "!!Checking if "checkword" can be a 5 based on single 6"
+        matched = 0
+        do c6 = 1 to length(word(found.6,1))
+          if pos(substr(found.6,c6,1),checkword) > 0 then do
+            matched = matched + 1
+          end
+        end
+        if matched = length(checkword) then do
+          say checkword "... it can be a 5"
+          reduced5 = strip(reduced5' 'checkword)
+        end
+      end
+      found.5 = reduced5
+    end
+    
+
+    if words(found.3) = 1 then do
       reduced0 = ''
       do check = 1 to words(found.0)
         checkword = word(found.0, check)
+        say "Checking if "checkword" can be 0 based on value of 3"
         if pos('a',checkword) = 0 then gofor='a'
         if pos('b',checkword) = 0 then gofor='b'
         if pos('c',checkword) = 0 then gofor='c'
@@ -196,19 +221,27 @@ do i = 1 to file.0
         if pos('e',checkword) = 0 then gofor='e'
         if pos('f',checkword) = 0 then gofor='f'
         if pos('g',checkword) = 0 then gofor='g'
-        say "Not in 0 => "gofor" check with 9"
-        if pos(gofor, word(found.9,1)) > 0 then
+        say "Character Not in 0 => "gofor" check with 3"
+        if pos(gofor, word(found.3,1)) > 0 then do
+          say ".. it's in 3 so could be "checkword
           reduced0 = strip(reduced0' 'checkword)
-        found.0 = reduced0
+        end
       end
+      found.0 = reduced0
     end
+
+    
+
     /* more weirdness on the 6 */
-    /* whatever is NOT in 6, HAS has to be in the 2 IF 6 has only 1 */
-     if words(found.6) = 1 then do
-      reduced2 = ''
-      do check = 1 to words(found.2)
-        checkword = word(found.6, 1)
-        say "Checking if "checkword" can be 2"
+    
+
+    /* we need a trick with 6 based on?*/
+     /* whatever is NOT in 6, HAS has to be in the 1 IF 1 has only 1 */
+    if words(found.1) = 1 then do
+      reduced6 = ''
+      do check = 1 to words(found.6)
+        checkword = word(found.6, check)
+        say "Checking if "checkword" can be 6"
         if pos('a',checkword) = 0 then gofor='a'
         if pos('b',checkword) = 0 then gofor='b'
         if pos('c',checkword) = 0 then gofor='c'
@@ -216,11 +249,14 @@ do i = 1 to file.0
         if pos('e',checkword) = 0 then gofor='e'
         if pos('f',checkword) = 0 then gofor='f'
         if pos('g',checkword) = 0 then gofor='g'
-        say "Not in 6 => "gofor" check with 2"
-        if pos(gofor, word(found.2,1)) > 0 then
-          reduced2 = strip(reduced2' 'word(found.2,check))
-        found.2 = reduced2
+        say "Not in 6 => "gofor" check with value of 1 "found.1
+        if pos(gofor, word(found.1,1)) > 0 then do
+          say "... yes can be"
+          reduced6 = strip(reduced6' 'word(found.6,check))
+        end
+        
       end
+      found.6 = reduced6
     end  
     /* see what we have now */
     xx =  printKnown()
@@ -230,13 +266,56 @@ do i = 1 to file.0
         newfounds = newfounds + 1
     end
     say "New FOUNDCOUNT -------------> "newfounds
-    foundcount = newfounds
+    /* shorcut : do we know enough to solve?*/
+    knowenough = 0
+    do vv = 1 to out.0
+      do jj = 0 to 9
+        if found.jj = out.vv then knowenough=knowenough+1
+      end
+    end
+    say "I've got "knowenough"/"out.0
     
-
-   
+    
+    
+    if knowenough = out.0 then foundcount = 10
+    else foundcount = newfounds
+  end
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  say "**************** Line "i" parsed*********************************"
+  /* get them values out */
+  dstr = ''
+  do vv = 1 to out.0
+    do ll = 0 to 9
+      if found.ll = out.vv then dstr = dstr || ll
+    end
+  end
+  say dstr
+  sigsum = sigsum + dstr
+  
 end
 
-say "solution="easyOnes"@"time('S')-begin
+say "solution="sigsum"@"time('S')-begin
 
 exit
 
@@ -247,12 +326,18 @@ potentialDigits: arg s
     if length(d.c) = l then
       p = p' 'c
   end
+  say "poetentials "p
   return p
 
 printKnown:
   do kk = 0 to 9
     say found.kk "-->"kk
+    if words(found.kk) = 0 then do
+      say "EEEJ WENT TO NONE????????? *****************"
+      exit
+    end
   end
+  
   return 0 
 
 innit: arg n, h

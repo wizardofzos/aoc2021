@@ -9,5 +9,6 @@ from .rexxd04 import REXXD04P1, REXXD04P2
 from .rexxd05 import REXXD05P1, REXXD05P2, REXXD05P2a
 from .rexxd06 import REXXD06P1, REXXD06P2
 from .rexxd07 import REXXD07P1, REXXD07P2
+from .rexxd08 import REXXD08P1, REXXD08P2
 from .d01p1python import PYTHOND01P1
 from .d01p2python import PYTHOND01P2
