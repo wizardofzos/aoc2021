@@ -92,7 +92,16 @@ api.add_resource(REXXD10P1, '/d10p01-rexx')
 docs.register(REXXD10P1)
 api.add_resource(REXXD10P2, '/d10p02-rexx')
 docs.register(REXXD10P2)
-
+api.add_resource(REXXD11P1, '/d11p01-rexx')
+docs.register(REXXD11P1)
+api.add_resource(REXXD11P2, '/d11p02-rexx')
+docs.register(REXXD11P2)
+api.add_resource(PYTHOND11, '/d11-python')
+docs.register(PYTHOND11)
+api.add_resource(REXXD12P1, '/d12p01-rexx')
+docs.register(REXXD12P1)
+api.add_resource(REXXD12P2, '/d12p02-rexx')
+docs.register(REXXD12P2)
 if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 12345))
