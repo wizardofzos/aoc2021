@@ -72,12 +72,8 @@ lowest: arg xx,yy
     return "no"
 
 createBasin: arg rr
-  /* check all points around us (no nines or higher) 
-  if that point is higher. add to res. and recurse
-                p1 p2 p3
-                p4 xy p5
-                p6 p7 p8 
-  */
+ /* take all rows to left, upto a 9 or higher, then go down/up
+ then do the same for rows to right*/
   r = ''
   say rr
   do k = 1 to words(rr)
@@ -85,49 +81,59 @@ createBasin: arg rr
     parse var loccie xx","yy
     val = pos.xx.yy
     say "Checking basin"xx","yy"==>"val
- 
-    p1x = xx - 1; p1y = yy - 1
-    p2x = xx    ; p2y = yy - 1
-    p3x = xx + 1; p3y = yy - 1
-    p4x = xx - 1; p4y = yy 
-    p5x = xx + 1; p5y = yy
-    p6x = xx - 1; p6y = yy + 1
-    p7x = xx    ; p7y = yy + 1
-    p8x = xx + 1; p8y = yy + 1
+    /* go left */
+    do cx = xx to 0 by -1
+      if pos.cx.yy < 9 then do
+        newpos = cx","yy
+        if isin(newpos,r) = 0 then
+          r = r" "newpos
+        do cy = yy to 0 by -1
+          if pos.cx.cy < 9 then do
+            newpos = cx","cy
+            if isin(newpos,r) = 0 then
+              r = r" "newpos
+        end
+        do cy = yy to ymax by 1
+          if pos.cx.cy < 9 then do
+            newpos = cx","cy
+            if isin(newpos,r) = 0 then
+              r = r" "newpos
+        end        
+      end
+    end
+    /* go right  */
+    do cx = xx to xmax by 1
+      if pos.cx.yy < 9 then do
+        newpos = cx","yy
+        if isin(newpos,r) = 0 then
+          r = r" "newpos
+        do cy = yy to 0 by -1
+          if pos.cx.cy < 9 then do
+            newpos = cx","cy
+            if isin(newpos,r) = 0 then
+              r = r" "newpos
+        end
+        do cy = yy to ymax by 1
+          if pos.cx.cy < 9 then do
+            newpos = cx","cy
+            if isin(newpos,r) = 0 then
+              r = r" "newpos
+        end        
+      end
+    end    
+ end
+ return r
     
-    say p2x","p2y"==>"pos.p2x.p2y
-    say p4x","p4y"==>"pos.p4x.p4y
-    say p5x","p5y"==>"pos.p5x.p5y
-    say p7x","p7y"==>"pos.p7x.p7y
 
-
-    if pos.p2x.p2y > val & pos.p2x.p2y < 9 then do
-      say p2x","p2y
-      r = r" "p2x","p2y
-    end
-
-    if pos.p4x.p4y > val & pos.p4x.p4y < 9 then do
-      say p4x","p4y
-      r = r" "p4x","p4y
-    end
-    if pos.p5x.p5y > val & pos.p5x.p5y < 9 then do
-      say p5x","p5y
-      r = r" "p5x","p5y
-    end
-
-    if pos.p7x.p7y > val & pos.p7x.p7y < 9 then do
-      say p7x","p7y
-      r = r" "p7x","p7y
+isin: parse arg n,h
+  found = 0
+  do i = 1 to words(h)
+    if word(h,i) = n then do 
+      found = 1
+      leave
     end
   end
-  new = ""
-  if words(r) < 1 then return rr
-  else do
-    do ll = 1 to words(r)
-      new = new" "createBasin(word(r,ll))
-    end
-    return rr" "new
-  end
+  return found
 
 
 
