@@ -14,6 +14,10 @@ from .rexxd09 import REXXD09P1, REXXD09P2
 from .rexxd10 import REXXD10P1, REXXD10P2
 from .rexxd11 import REXXD11P1, REXXD11P2
 from .rexxd12 import REXXD12P1, REXXD12P2
+from .rexxd15 import REXXD15P1, REXXD15P2
+from .rexxd16 import REXXD16P1, REXXD16P2
 from .pythond11 import PYTHOND11
+from .pythond12 import PYTHOND12
+from .pythond15 import PYTHOND15
 from .d01p1python import PYTHOND01P1
 from .d01p2python import PYTHOND01P2
